@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -27,6 +17,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import ActivitiesCardList from './ui/ActivitiesCardList/ActivitiesCardList';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -50,11 +41,7 @@ const App = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
+              <ActivitiesCardList />
             </View>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>See Your Changes</Text>
