@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,8 +16,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {
+  DefaultTheme,
+  Portal,
+  Provider as PaperProvider,
+} from 'react-native-paper';
 import ActivitiesCardList from './ui/ActivitiesCardList/ActivitiesCardList';
+import AddActivityDialog from './ui/AddActivity/AddActivityDialog';
+import AddActivityFAB from './components/AddActivityFAB';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -26,6 +32,7 @@ const theme = {
 };
 
 const App = () => {
+  const [openAddDialog, setOpenAddDialog] = useState(false);
   return (
     <PaperProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
@@ -41,6 +48,15 @@ const App = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
+              <AddActivityDialog
+                visible={openAddDialog}
+                onDismiss={() => {
+                  setOpenAddDialog(false);
+                }}
+                onSave={() => {
+                  setOpenAddDialog(false);
+                }}
+              />
               <ActivitiesCardList />
             </View>
             <View style={styles.sectionContainer}>
@@ -64,6 +80,11 @@ const App = () => {
             <LearnMoreLinks />
           </View>
         </ScrollView>
+        <AddActivityFAB
+          onPress={() => {
+            setOpenAddDialog(true);
+          }}
+        />
       </SafeAreaView>
     </PaperProvider>
   );
