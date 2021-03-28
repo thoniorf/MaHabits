@@ -16,14 +16,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {
-  DefaultTheme,
-  Portal,
-  Provider as PaperProvider,
-} from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import ActivitiesCardList from './ui/ActivitiesCardList/ActivitiesCardList';
 import AddActivityDialog from './ui/AddActivity/AddActivityDialog';
 import AddActivityFAB from './components/AddActivityFAB';
+import {Provider} from 'react-redux';
+import store from './store/store';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -34,59 +32,61 @@ const theme = {
 const App = () => {
   const [openAddDialog, setOpenAddDialog] = useState(false);
   return (
-    <PaperProvider theme={theme}>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView>
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={styles.scrollView}>
+            <Header />
+            {global.HermesInternal == null ? null : (
+              <View style={styles.engine}>
+                <Text style={styles.footer}>Engine: Hermes</Text>
+              </View>
+            )}
+            <View style={styles.body}>
+              <View style={styles.sectionContainer}>
+                <AddActivityDialog
+                  visible={openAddDialog}
+                  onDismiss={() => {
+                    setOpenAddDialog(false);
+                  }}
+                  onSave={() => {
+                    setOpenAddDialog(false);
+                  }}
+                />
+                <ActivitiesCardList />
+              </View>
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>See Your Changes</Text>
+                <Text style={styles.sectionDescription}>
+                  <ReloadInstructions />
+                </Text>
+              </View>
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Debug</Text>
+                <Text style={styles.sectionDescription}>
+                  <DebugInstructions />
+                </Text>
+              </View>
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Learn More</Text>
+                <Text style={styles.sectionDescription}>
+                  Read the docs to discover what to do next:
+                </Text>
+              </View>
+              <LearnMoreLinks />
             </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <AddActivityDialog
-                visible={openAddDialog}
-                onDismiss={() => {
-                  setOpenAddDialog(false);
-                }}
-                onSave={() => {
-                  setOpenAddDialog(false);
-                }}
-              />
-              <ActivitiesCardList />
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-        <AddActivityFAB
-          onPress={() => {
-            setOpenAddDialog(true);
-          }}
-        />
-      </SafeAreaView>
-    </PaperProvider>
+          </ScrollView>
+          <AddActivityFAB
+            onPress={() => {
+              setOpenAddDialog(true);
+            }}
+          />
+        </SafeAreaView>
+      </PaperProvider>
+    </Provider>
   );
 };
 

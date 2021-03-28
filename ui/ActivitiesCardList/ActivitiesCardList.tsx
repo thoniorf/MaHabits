@@ -3,6 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import ActivityCard from '../../components/ActivityCard';
 import {Activity} from '../../model/Activity.type';
 import {ActivityDailyStatus} from '../../model/ActivityDaily';
+import {useAppSelector} from '../../store/hooks';
+import {selectActivities} from '../../store/reducers/activitiesReducer';
 
 const exampleActivity: Activity = {
   title: 'Example Activity',
@@ -14,15 +16,6 @@ const exampleActivity: Activity = {
   ],
 };
 
-const exampleList = [
-  exampleActivity,
-  exampleActivity,
-  exampleActivity,
-  exampleActivity,
-  exampleActivity,
-  exampleActivity,
-];
-
 const styles = StyleSheet.create({
   listItem: {
     marginTop: 8,
@@ -31,11 +24,11 @@ const styles = StyleSheet.create({
 });
 
 const ActivitiesCardList = () => {
-  const [activities, setActivities] = useState(exampleList);
+  const stateActivities = useAppSelector(selectActivities);
 
   return (
     <View>
-      {activities.map((activity, index) => (
+      {stateActivities.map((activity, index) => (
         <ActivityCard
           key={'activity_card_' + index}
           activity={activity}
