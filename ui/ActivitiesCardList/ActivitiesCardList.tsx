@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import ActivityCard from '../../components/ActivityCard';
-import {useAppSelector} from '../../store/hooks';
-import {selectActivities} from '../../store/reducers/activitiesReducer';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {
+  loadActivitiesFromLocal,
+  selectActivities,
+} from '../../store/reducers/activitiesReducer';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -13,7 +16,18 @@ const styles = StyleSheet.create({
 
 const ActivitiesCardList = () => {
   const stateActivities = useAppSelector(selectActivities);
+  const dispatch = useAppDispatch();
 
+  console.log('state', stateActivities);
+
+  useEffect(() => {
+    if (!stateActivities.length) {
+      console.log('Fetching from local');
+
+      dispatch(loadActivitiesFromLocal());
+      console.log('fetched');
+    }
+  }, [dispatch, stateActivities]);
   return (
     <View>
       {stateActivities.map((activity, index) => (
