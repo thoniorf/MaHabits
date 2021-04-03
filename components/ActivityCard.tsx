@@ -19,12 +19,13 @@ const ActivityCard: React.FC<ActivityCardProps> = ({activity, style}) => {
         <Paragraph>{description ?? 'No description'}</Paragraph>
       </Card.Content>
       <Card.Actions>
-        <Paragraph>WeekStatus</Paragraph>
-        {dailies?.map((daily, index) => {
-          return (
-            <ActivityCardActionButton key={title + index} activity={daily} />
-          );
-        })}
+        <Paragraph>
+          {dailies?.map((daily, index) => {
+            return (
+              <ActivityCardActionButton key={title + index} activity={daily} />
+            );
+          })}
+        </Paragraph>
       </Card.Actions>
     </Card>
   );

@@ -1,15 +1,12 @@
 import React, {useState} from 'react';
 import {Button} from 'react-native-paper';
-import {
-  ActivityDailyInterface,
-  ActivityDailyStatus,
-} from '../model/ActivityDaily';
+import {ActivityDaily, ActivityDailyStatus} from '../model/ActivityDaily.type';
 
 type ActivityCardActionButtonProps = Omit<
   React.ComponentProps<typeof Button>,
   'children'
 > & {
-  activity: ActivityDailyInterface;
+  activity: ActivityDaily;
 };
 
 const ActivityCardActionButton: React.FC<ActivityCardActionButtonProps> = ({

@@ -1,4 +1,4 @@
-import ActivityDaily from './ActivityDaily';
+import {ActivityDaily} from './ActivityDaily.type';
 
 export type Activity = {
   title: string;
